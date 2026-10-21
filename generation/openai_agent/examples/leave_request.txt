@@ -1,0 +1,1 @@
+An employee submits a leave request. The manager reviews the request. If the manager approves it, HR records the approved leave and informs the employee of the approval. Otherwise, the employee receives a rejection notification. The process then ends.
