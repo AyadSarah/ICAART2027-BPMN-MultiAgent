@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite the paper below."
+title: "A Multi-Agent Framework for Quality-Driven Iterative Refinement of BPMN Models Using Large Language Models - code and data"
+authors:
+  - family-names: Ayad
+    given-names: Sarah
+    affiliation: "Arab Open University, Saudi Arabia"
+    orcid: "https://orcid.org/0009-0000-4389-9827"
+  - family-names: Kourani
+    given-names: Humam
+    affiliation: "Fraunhofer Institute for Applied Information Technology FIT, Germany"
+    orcid: "https://orcid.org/0000-0003-2375-2152"
+license: MIT
+preferred-citation:
+  type: conference-paper
+  title: "A Multi-Agent Framework for Quality-Driven Iterative Refinement of BPMN Models Using Large Language Models"
+  authors:
+    - family-names: Ayad
+      given-names: Sarah
+    - family-names: Kourani
+      given-names: Humam
+  conference:
+    name: "International Conference on Agents and Artificial Intelligence (ICAART 2027)"
+  year: 2027
+references:
+  - type: dataset
+    title: "PMo Dataset"
+    authors:
+      - family-names: Brissard
+        given-names: Alexis
+      - family-names: Cuppens
+        given-names: Frédéric
+      - family-names: Zouaq
+        given-names: Amal
+    version: "1.0.0"
+    doi: "10.5281/zenodo.15857589"
+    year: 2025

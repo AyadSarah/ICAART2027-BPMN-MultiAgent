@@ -1,0 +1,17 @@
+# Secrets
+.env
+*.env
+!.env.example
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+# PMo dataset (downloaded by data/prepare_pmo.py)
+data/PMo_ready/
+data/pmo-dataset.zip
+results/generation/PMo_combined_analysis/descriptions/
+results/generation/PMo_combined_analysis/ground_truth_RESTRICTED/
+# OS
+.DS_Store
+Thumbs.db
