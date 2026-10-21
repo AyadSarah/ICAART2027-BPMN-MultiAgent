@@ -1,0 +1,4 @@
+generator,models,mean_precision,mean_recall,fewer_activities_than_reference,same_number,more_activities,mean_generated_gateways,mean_reference_gateways,fewer_gateways_than_reference
+openai,34,0.639,0.525,24,7,3,3.0,7.4,29
+claude,54,0.58,0.493,38,7,9,3.0,8.2,46
+all,88,0.603,0.506,62,14,12,3.0,7.9,75

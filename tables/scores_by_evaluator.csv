@@ -1,0 +1,5 @@
+evaluator,dimension,openai_generated_mean,openai_generated_sd,claude_generated_mean,claude_generated_sd,all_mean,all_sd
+openai,semantic,2.91,0.75,2.56,0.82,2.69,0.81
+openai,pragmatic,3.18,0.39,3.02,0.31,3.08,0.35
+claude,semantic,2.21,0.73,2.13,0.52,2.16,0.6
+claude,pragmatic,2.94,0.34,2.96,0.43,2.95,0.4

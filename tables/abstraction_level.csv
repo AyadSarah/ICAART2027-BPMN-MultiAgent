@@ -1,0 +1,4 @@
+code,comments,models,by_openai,by_claude,openai_generated_models,claude_generated_models
+appropriate,13,12,7,6,6,6
+too_general,20,19,6,14,7,12
+too_specific,15,14,4,11,8,6

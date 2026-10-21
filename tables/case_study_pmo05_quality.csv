@@ -1,0 +1,5 @@
+model,activities,gateways,flow_nodes,sequence_flows,duplicate_sequence_flows,unlabelled_xor_outgoing_edges,pools,pools_without_activities,activities_with_actor,activities_with_input_resource,activities_with_output_resource,data_artifacts,message_flows,model_richness_recall,activity_precision,labels_beginning_with_verb_note,compound_activity_labels,redundant_activity_names
+claude_original,8,0,10,9,0,0,0,0,0,0,0,0,0,0.364,0.5,checked manually: all activity labels begin with a verb,1,0
+claude_self_refined,12,4,18,19,0,0,2,0,12,4,3,3,2,0.545,0.5,checked manually: all activity labels begin with a verb,1,0
+claude_same_refined,8,3,14,16,1,1,2,1,8,2,3,3,2,0.727,1.0,checked manually: all activity labels begin with a verb,1,0
+claude_cross_refined,8,2,12,12,0,0,2,1,8,2,3,3,2,0.636,0.875,checked manually: all activity labels begin with a verb,0,0

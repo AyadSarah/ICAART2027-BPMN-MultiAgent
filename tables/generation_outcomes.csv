@@ -1,0 +1,3 @@
+generator,attempts,usable,usable_rate_pct,recovered_with_16000_tokens
+openai,55,34,61.8,0
+claude,55,54,98.2,16

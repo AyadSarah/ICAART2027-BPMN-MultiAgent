@@ -1,0 +1,7 @@
+generator,strategy,usable,runs
+claude,cross,5,5
+claude,same,5,5
+claude,self,4,5
+openai,cross,1,5
+openai,same,4,5
+openai,self,5,5

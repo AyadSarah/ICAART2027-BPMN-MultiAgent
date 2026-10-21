@@ -1,0 +1,5 @@
+group,n,mean_reference_activities,mann_whitney_p_openai
+OpenAI failed,21,13.9,0.042
+OpenAI succeeded,34,11.3,0.042
+Claude recovered (16000 tokens),16,15.8,0.042
+Claude original limit (8192 tokens),38,10.4,0.042

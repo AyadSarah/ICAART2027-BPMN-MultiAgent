@@ -1,0 +1,12 @@
+dimension,theme,openai_share_pct,openai_models,claude_share_pct,claude_models,both_models
+pragmatic,Abstraction,4.2,12,6.3,34,6
+pragmatic,Complexity,12.2,33,11.7,58,24
+pragmatic,Invented content,0.0,0,1.0,5,0
+pragmatic,Labelling,25.1,72,22.4,78,66
+pragmatic,Other,0.3,1,3.6,19,1
+semantic,Abstraction,1.0,3,4.1,22,0
+semantic,Control flow,24.0,59,21.1,77,57
+semantic,Invented content,0.7,2,3.1,15,0
+semantic,Missing content,26.5,54,18.3,69,48
+semantic,Other,0.0,0,7.0,34,0
+semantic,Responsibilities,5.9,17,1.5,9,1
