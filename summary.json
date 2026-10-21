@@ -1,0 +1,128 @@
+{
+  "created_utc": "2026-10-13T04:19:29.971933+00:00",
+  "rows": 110,
+  "counts_by_agent": {
+    "openai": {
+      "XML_AVAILABLE": 34,
+      "INVALID_XML_FILE": 21
+    },
+    "claude": {
+      "XML_AVAILABLE": 54,
+      "NO_VALID_XML": 1
+    }
+  },
+  "recovered_claude_used": 16,
+  "missing_or_invalid": [
+    {
+      "id": "09",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "12",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "13",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "14",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "16",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "17",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "18",
+      "agent": "claude",
+      "status": "NO_VALID_XML"
+    },
+    {
+      "id": "19",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "25",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "29",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "30",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "31",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "32",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "33",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "36",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "37",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "38",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "39",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "43",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "44",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "46",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    },
+    {
+      "id": "48",
+      "agent": "openai",
+      "status": "INVALID_XML_FILE"
+    }
+  ],
+  "reference_files_found": 55
+}
