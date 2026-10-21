@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  id="Definitions_1"
+                  targetNamespace="http://www.example.org/bpmn">
+  
+  <bpmn:collaboration id="Collaboration_1">
+    <bpmn:participant id="Participant_Company" name="Company" processRef="Process_SupplierSelection"/>
+    <bpmn:participant id="Participant_Suppliers" name="Suppliers" processRef="Process_Suppliers"/>
+    <bpmn:messageFlow id="MessageFlow_1" sourceRef="Task_IssueRFP" targetRef="Task_ReceiveRFP"/>
+    <bpmn:messageFlow id="MessageFlow_2" sourceRef="Task_SubmitProposal" targetRef="Task_ReceiveProposals"/>
+  </bpmn:collaboration>
+  
+  <bpmn:process id="Process_SupplierSelection" name="Supplier Selection Process" isExecutable="true">
+    
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_ProcurementTeam" name="Procurement Team">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_IssueRFP</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ReceiveProposals</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_EvaluateCost</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_EvaluateQuality</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_EvaluateDeliveryTime</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_EvaluationFork</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_EvaluationJoin</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_SiteVisitDecision</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ConductSiteVisits</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_SiteVisitMerge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SelectSupplier</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_NegotiateContract</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SignContract</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_OnboardSupplier</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_1</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    
+    <bpmn:dataStoreReference id="DataStore_RFP" name="RFP"/>
+    <bpmn:dataStoreReference id="DataStore_Proposals" name="Supplier Proposals"/>
+    <bpmn:dataStoreReference id="DataStore_Contract" name="Contract"/>
+    
+    <bpmn:startEvent id="StartEvent_1" name="Need for new supplier identified">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    
+    <bpmn:task id="Task_IssueRFP" name="Issue RFP">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutput_RFP">
+        <bpmn:targetRef>DataStore_RFP</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    
+    <bpmn:task id="Task_ReceiveProposals" name="Receive proposals from suppliers">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutput_Proposals">
+        <bpmn:targetRef>DataStore_Proposals</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    
+    <bpmn:parallelGateway id="Gateway_EvaluationFork" name="Evaluate criteria">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4a</bpmn:outgoing>
+      <bpmn:outgoing>Flow_4b</bpmn:outgoing>
+      <bpmn:outgoing>Flow_4c</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    
+    <bpmn:task id="Task_EvaluateCost" name="Evaluate cost">
+      <bpmn:incoming>Flow_4a</bpmn:incoming>
+      <bpmn:outgoing>Flow_5a</bpmn:outgoing>
+      <bpmn:property id="Property_Cost" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="DataInput_ProposalsCost">
+        <bpmn:sourceRef>DataStore_Proposals</bpmn:sourceRef>
+        <bpmn:targetRef>Property_Cost</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    
+    <bpmn:task id="Task_EvaluateQuality" name="Evaluate quality">
+      <bpmn:incoming>Flow_4b</bpmn:incoming>
+      <bpmn:outgoing>Flow_5b</bpmn:outgoing>
+      <bpmn:property id="Property_Quality" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="DataInput_ProposalsQuality">
+        <bpmn:sourceRef>DataStore_Proposals</bpmn:sourceRef>
+        <bpmn:targetRef>Property_Quality</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    
+    <bpmn:task id="Task_EvaluateDeliveryTime" name="Evaluate delivery time">
+      <bpmn:incoming>Flow_4c</bpmn:incoming>
+      <bpmn:outgoing>Flow_5c</bpmn:outgoing>
+      <bpmn:property id="Property_DeliveryTime" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="DataInput_ProposalsDelivery">
+        <bpmn:sourceRef>DataStore_Proposals</bpmn:sourceRef>
+        <bpmn:targetRef>Property_DeliveryTime</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    
+    <bpmn:parallelGateway id="Gateway_EvaluationJoin">
+      <bpmn:incoming>Flow_5a</bpmn:incoming>
+      <bpmn:incoming>Flow_5b</bpmn:incoming>
+      <bpmn:incoming>Flow_5c</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    
+    <bpmn:exclusiveGateway id="Gateway_SiteVisitDecision" name="Site visit needed?">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_7_Yes</bpmn:outgoing>
+      <bpmn:outgoing>Flow_7_No</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    
+    <bpmn:task id="Task_ConductSiteVisits" name="Conduct site visits or interviews">
+      <bpmn:incoming>Flow_7_Yes</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:task>
+    
+    <bpmn:exclusiveGateway id="Gateway_SiteVisitMerge">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:incoming>Flow_7_No</bpmn:incoming>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    
+    <bpmn:task id="Task_SelectSupplier" name="Select supplier after analysis">
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+    </bpmn:task>
+    
+    <bpmn:task id="Task_NegotiateContract" name="Negotiate contract terms">
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_11</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutput_Contract">
+        <bpmn:targetRef>DataStore_Contract</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    
+    <bpmn:task id="Task_SignContract" name="Sign contract">
+      <bpmn:incoming>Flow_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_12</bpmn:outgoing>
+      <bpmn:property id="Property_Contract" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="DataInput_Contract">
+        <bpmn:sourceRef>DataStore_Contract</bpmn:sourceRef>
+        <bpmn:targetRef>Property_Contract</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    
+    <bpmn:task id="Task_OnboardSupplier" name="Onboard supplier and execute contract">
+      <bpmn:incoming>Flow_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_13</bpmn:outgoing>
+    </bpmn:task>
+    
+    <bpmn:endEvent id="EndEvent_1" name="Supplier onboarded and contract executed">
+      <bpmn:incoming>Flow_13</bpmn:incoming>
+    </bpmn:endEvent>
+    
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Task_IssueRFP"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_IssueRFP" targetRef="Task_ReceiveProposals"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_ReceiveProposals" targetRef="Gateway_EvaluationFork"/>
+    <bpmn:sequenceFlow id="Flow_4a" sourceRef="Gateway_EvaluationFork" targetRef="Task_EvaluateCost"/>
+    <bpmn:sequenceFlow id="Flow_4b" sourceRef="Gateway_EvaluationFork" targetRef="Task_EvaluateQuality"/>
+    <bpmn:sequenceFlow id="Flow_4c" sourceRef="Gateway_EvaluationFork" targetRef="Task_EvaluateDeliveryTime"/>
+    <bpmn:sequenceFlow id="Flow_5a" sourceRef="Task_EvaluateCost" targetRef="Gateway_EvaluationJoin"/>
+    <bpmn:sequenceFlow id="Flow_5b" sourceRef="Task_EvaluateQuality" targetRef="Gateway_EvaluationJoin"/>
+    <bpmn:sequenceFlow id="Flow_5c" sourceRef="Task_EvaluateDeliveryTime" targetRef="Gateway_EvaluationJoin"/>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Gateway_EvaluationJoin" targetRef="Gateway_SiteVisitDecision"/>
+    <bpmn:sequenceFlow id="Flow_7_Yes" name="Yes" sourceRef="Gateway_SiteVisitDecision" targetRef="Task_ConductSiteVisits"/>
+    <bpmn:sequenceFlow id="Flow_7_No" name="No" sourceRef="Gateway_SiteVisitDecision" targetRef="Gateway_SiteVisitMerge"/>
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Task_ConductSiteVisits" targetRef="Gateway_SiteVisitMerge"/>
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="Gateway_SiteVisitMerge" targetRef="Task_SelectSupplier"/>
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="Task_SelectSupplier" targetRef="Task_NegotiateContract"/>
+    <bpmn:sequenceFlow id="Flow_11" sourceRef="Task_NegotiateContract" targetRef="Task_SignContract"/>
+    <bpmn:sequenceFlow id="Flow_12" sourceRef="Task_SignContract" targetRef="Task_OnboardSupplier"/>
+    <bpmn:sequenceFlow id="Flow_13" sourceRef="Task_OnboardSupplier" targetRef="EndEvent_1"/>
+    
+  </bpmn:process>
+  
+  <bpmn:process id="Process_Suppliers" name="Supplier Process" isExecutable="false">
+    
+    <bpmn:task id="Task_ReceiveRFP" name="Receive RFP">
+      <bpmn:outgoing>Flow_S1</bpmn:outgoing>
+    </bpmn:task>
+    
+    <bpmn:task id="Task_SubmitProposal" name="Submit proposal">
+      <bpmn:incoming>Flow_S1</bpmn:incoming>
+    </bpmn:task>
+    
+    <bpmn:sequenceFlow id="Flow_S1" sourceRef="Task_ReceiveRFP" targetRef="Task_SubmitProposal"/>
+    
+  </bpmn:process>
+  
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      
+      <bpmndi:BPMNShape id="Shape_Participant_Company" bpmnElement="Participant_Company" isHorizontal="true">
+        <dc:Bounds x="120" y="80" width="1620" height="400"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Lane_ProcurementTeam" bpmnElement="Lane_ProcurementTeam" isHorizontal="true">
+        <dc:Bounds x="150" y="80" width="1590" height="400"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Participant_Suppliers" bpmnElement="Participant_Suppliers" isHorizontal="true">
+        <dc:Bounds x="120" y="540" width="600" height="150"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_StartEvent_1" bpmnElement="StartEvent_1">
+        <dc:Bounds x="202" y="202" width="36" height="36"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="176" y="245" width="88" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Task_IssueRFP" bpmnElement="Task_IssueRFP">
+        <dc:Bounds x="280" y="180" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_DataStore_RFP" bpmnElement="DataStore_RFP">
+        <dc:Bounds x="305" y="315" width="50" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="315" y="372" width="24" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Task_ReceiveProposals" bpmnElement="Task_ReceiveProposals">
+        <dc:Bounds x="420" y="180" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_DataStore_Proposals" bpmnElement="DataStore_Proposals">
+        <dc:Bounds x="545" y="315" width="50" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="529" y="372" width="82" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Gateway_EvaluationFork" bpmnElement="Gateway_EvaluationFork">
+        <dc:Bounds x="565" y="195" width="50" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="551" y="252" width="78" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Task_EvaluateCost" bpmnElement="Task_EvaluateCost">
+        <dc:Bounds x="660" y="120" width="100" height="60"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Task_EvaluateQuality" bpmnElement="Task_EvaluateQuality">
+        <dc:Bounds x="660" y="190" width="100" height="60"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Task_EvaluateDeliveryTime" bpmnElement="Task_EvaluateDeliveryTime">
+        <dc:Bounds x="660" y="260" width="100" height="60"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Gateway_EvaluationJoin" bpmnElement="Gateway_EvaluationJoin">
+        <dc:Bounds x="805" y="195" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Gateway_SiteVisitDecision" bpmnElement="Gateway_SiteVisitDecision">
+        <dc:Bounds x="900" y="195" width="50" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="893" y="252" width="64" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Task_ConductSiteVisits" bpmnElement="Task_ConductSiteVisits">
+        <dc:Bounds x="1000" y="120" width="100" height="60"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Gateway_SiteVisitMerge" bpmnElement="Gateway_SiteVisitMerge">
+        <dc:Bounds x="1145" y="195" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Task_SelectSupplier" bpmnElement="Task_SelectSupplier">
+        <dc:Bounds x="1240" y="180" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Task_NegotiateContract" bpmnElement="Task_NegotiateContract">
+        <dc:Bounds x="1380" y="180" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_DataStore_Contract" bpmnElement="DataStore_Contract">
+        <dc:Bounds x="1405" y="315" width="50" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1403" y="372" width="44" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Task_SignContract" bpmnElement="Task_SignContract">
+        <dc:Bounds x="1520" y="180" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Task_OnboardSupplier" bpmnElement="Task_OnboardSupplier">
+        <dc:Bounds x="1520" y="320" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_EndEvent_1" bpmnElement="EndEvent_1">
+        <dc:Bounds x="1662" y="342" width="36" height="36"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1636" y="385" width="88" height="40"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Task_ReceiveRFP" bpmnElement="Task_ReceiveRFP">
+        <dc:Bounds x="280" y="585" width="100" height="60"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNShape id="Shape_Task_SubmitProposal" bpmnElement="Task_SubmitProposal">
+        <dc:Bounds x="420" y="585" width="100" height="60"/>
+      </bpmndi:BPMNShape>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_1" bpmnElement="Flow_1">
+        <di:waypoint x="238" y="220"/>
+        <di:waypoint x="280" y="220"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_DataOutput_RFP" bpmnElement="DataOutput_RFP">
+        <di:waypoint x="330" y="260"/>
+        <di:waypoint x="330" y="315"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_2" bpmnElement="Flow_2">
+        <di:waypoint x="380" y="220"/>
+        <di:waypoint x="420" y="220"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_DataOutput_Proposals" bpmnElement="DataOutput_Proposals">
+        <di:waypoint x="500" y="260"/>
+        <di:waypoint x="500" y="290"/>
+        <di:waypoint x="570" y="290"/>
+        <di:waypoint x="570" y="315"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_3" bpmnElement="Flow_3">
+        <di:waypoint x="520" y="220"/>
+        <di:waypoint x="565" y="220"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_4a" bpmnElement="Flow_4a">
+        <di:waypoint x="590" y="195"/>
+        <di:waypoint x="590" y="150"/>
+        <di:waypoint x="660" y="150"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_4b" bpmnElement="Flow_4b">
+        <di:waypoint x="615" y="220"/>
+        <di:waypoint x="660" y="220"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_4c" bpmnElement="Flow_4c">
+        <di:waypoint x="590" y="245"/>
+        <di:waypoint x="590" y="290"/>
+        <di:waypoint x="660" y="290"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_DataInput_ProposalsCost" bpmnElement="DataInput_ProposalsCost">
+        <di:waypoint x="595" y="340"/>
+        <di:waypoint x="650" y="340"/>
+        <di:waypoint x="650" y="150"/>
+        <di:waypoint x="660" y="150"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_DataInput_ProposalsQuality" bpmnElement="DataInput_ProposalsQuality">
+        <di:waypoint x="595" y="340"/>
+        <di:waypoint x="640" y="340"/>
+        <di:waypoint x="640" y="220"/>
+        <di:waypoint x="660" y="220"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_DataInput_ProposalsDelivery" bpmnElement="DataInput_ProposalsDelivery">
+        <di:waypoint x="595" y="340"/>
+        <di:waypoint x="630" y="340"/>
+        <di:waypoint x="630" y="290"/>
+        <di:waypoint x="660" y="290"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_5a" bpmnElement="Flow_5a">
+        <di:waypoint x="760" y="150"/>
+        <di:waypoint x="830" y="150"/>
+        <di:waypoint x="830" y="195"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_5b" bpmnElement="Flow_5b">
+        <di:waypoint x="760" y="220"/>
+        <di:waypoint x="805" y="220"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_5c" bpmnElement="Flow_5c">
+        <di:waypoint x="760" y="290"/>
+        <di:waypoint x="830" y="290"/>
+        <di:waypoint x="830" y="245"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_6" bpmnElement="Flow_6">
+        <di:waypoint x="855" y="220"/>
+        <di:waypoint x="900" y="220"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_7_Yes" bpmnElement="Flow_7_Yes">
+        <di:waypoint x="925" y="195"/>
+        <di:waypoint x="925" y="150"/>
+        <di:waypoint x="1000" y="150"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_7_No" bpmnElement="Flow_7_No">
+        <di:waypoint x="950" y="220"/>
+        <di:waypoint x="1145" y="220"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_8" bpmnElement="Flow_8">
+        <di:waypoint x="1100" y="150"/>
+        <di:waypoint x="1170" y="150"/>
+        <di:waypoint x="1170" y="195"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_9" bpmnElement="Flow_9">
+        <di:waypoint x="1195" y="220"/>
+        <di:waypoint x="1240" y="220"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_10" bpmnElement="Flow_10">
+        <di:waypoint x="1340" y="220"/>
+        <di:waypoint x="1380" y="220"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_DataOutput_Contract" bpmnElement="DataOutput_Contract">
+        <di:waypoint x="1430" y="260"/>
+        <di:waypoint x="1430" y="315"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_11" bpmnElement="Flow_11">
+        <di:waypoint x="1480" y="220"/>
+        <di:waypoint x="1520" y="220"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_DataInput_Contract" bpmnElement="DataInput_Contract">
+        <di:waypoint x="1455" y="340"/>
+        <di:waypoint x="1490" y="340"/>
+        <di:waypoint x="1490" y="220"/>
+        <di:waypoint x="1520" y="220"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_12" bpmnElement="Flow_12">
+        <di:waypoint x="1570" y="260"/>
+        <di:waypoint x="1570" y="320"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_13" bpmnElement="Flow_13">
+        <di:waypoint x="1620" y="360"/>
+        <di:waypoint x="1662" y="360"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_Flow_S1" bpmnElement="Flow_S1">
+        <di:waypoint x="380" y="615"/>
+        <di:waypoint x="420" y="615"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_MessageFlow_1" bpmnElement="MessageFlow_1">
+        <di:waypoint x="330" y="260"/>
+        <di:waypoint x="330" y="585"/>
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNEdge id="Edge_MessageFlow_2" bpmnElement="MessageFlow_2">
+        <di:waypoint x="470" y="585"/>
+        <di:waypoint x="470" y="260"/>
+      </bpmndi:BPMNEdge>
+      
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  
+</bpmn:definitions>
