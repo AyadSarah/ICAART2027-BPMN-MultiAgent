@@ -1,0 +1,15 @@
+--- USER ---
+Generate a BPMN 2.0 model from this description:
+The process begins when a company identifies the need for a new supplier or vendor.
+The procurement team issues a request for proposals (RFP) and receives responses from various suppliers.
+Each proposal is evaluated based on criteria like cost, quality, and delivery time.
+The team may also conduct site visits or interviews with suppliers.
+After careful analysis, a supplier is selected, and contract negotiations begin.
+Once both parties agree on the terms, the contract is signed.
+The process ends when the supplier is officially onboarded, and the contract is executed.
+
+--- ASSISTANT ---
+[BPMN XML of the original model]
+
+--- USER ---
+Now independently inspect your preceding BPMN output for syntactic, semantic, and pragmatic problems. Revise it once and return complete corrected BPMN XML only. Respect the original process description. Do not use any external evaluator feedback.
